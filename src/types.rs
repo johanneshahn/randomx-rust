@@ -5,7 +5,7 @@ use std::ptr::NonNull;
 use std::sync::{Arc, RwLock};
 use std::thread;
 
-use ffi::*;
+use crate::ffi::*;
 use libc::c_void;
 
 struct Wrapper<T>(NonNull<T>);
@@ -192,6 +192,8 @@ impl RxState {
 					0
 				};
 			threads.push(thread::spawn(move || {
+				let dataset = dataset;
+				let cache = cache;
 				let d = dataset.0.as_ptr();
 				let c = cache.0.as_ptr();
 				unsafe {
